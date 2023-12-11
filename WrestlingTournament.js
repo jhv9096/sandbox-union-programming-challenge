@@ -27,11 +27,46 @@ function randomIntGenerator(min, max) { //This is NOT inclusive. Max should be +
  * Takes in a list of wrestlers and runs the tournament using them.
  *
  * Wrestler list cannot exceed 4 wrestlers
+ * This means that at most we can have 3 matches. 
  */
 function tournament(wrestlerList) {
-    
+    let numWrestlers = wrestlerList.length;
+    while(numWrestlers < 4) { //This works to fill up the wrestlerList to 4 slots (with the nulls acting as empties.)
+        wrestlerList.push(null);
+        numWrestlers = wrestlerList.length;
+    }
+
+    console.log("Match 1: " + wrestlerList[0].name + " vs. " + wrestlerList[1].name);
+    let matchWinner = match(wrestlerList[0], wrestlerList[1]);
+    if(matchwinner === 1) {
+        tournamentFinals.push(wrestlerList[0]);
+    }
+    else {
+        tournamentFinals.push(wrestlerList[1]);
+    }
+
+    if(wrestlerList[2] === null && wrestlerList[3] === null) {
+        //This runs if we only had 2 contestants. Basically, we then don't need another round.
+        console.log(tournamentFinals[0].name + " wins the tournament!");
+    }
+    else {
+        console.log("Match 2: " + wrestlerList[2].name + " vs. " + wrestlerList[3].name)
+        matchWinner = match(wrestlerList[2], wrestlerList[3]);
+        if(matchWinner === 1) {
+            tournamentFinals.push(wrestlerList[2]);
+        }
+        else {
+            tournamentFinals.push(wrestlerList[3]);
+        }
+
+        console.log("Match 3: " + tournamentFinals[0].name + " vs. " + tournamentFinals[1].name);
+    }
 }
 
+/*
+ * Handlesa match between two opponenets.
+ * Returns 1 if the first wrestler wins, returns 2 if the second one wins
+ */
 function match(wrestlerOne, wrestlerTwo) {
     let roundCounter = 1; //What round are we on?
     let bothFightersStillUp = true //Are both fighters still above zero health?
@@ -43,6 +78,19 @@ function match(wrestlerOne, wrestlerTwo) {
 
     let currentMove = -1; //Initialized to -1 so we don't accidentally have a default move.
 
+    //Is one of our wrestler slots empty? If yes, then they automatically win
+    if(wrestlerOne === null) {
+        console.log(wrestlerTwo.name + " gets a bye, and automatically advances to the next round!");
+        //tournamentFinals.push(wrestlerTwo);
+        return 2;
+    }
+    else if(wrestlerTwo === null) {
+        console.log(wrestlerOne.name + " gets a bye, and automatically advances to the next round!");
+        //tournamentFinals.push(wrestlerOne);
+        return 1;
+    }
+
+    //This means that we 
     while(bothFightersStillUp) { //While both out fighters are still above zero health
         console.log("Round " + roundCounter);
         currentMove = selectMove(wrestlerOne);
@@ -61,14 +109,29 @@ function match(wrestlerOne, wrestlerTwo) {
 
         if(wrestlerTwoMatchHealth <= 0) {
             bothFightersStillUp = false;
-            break;
+            console.log(wrestlerTwo.name + " health is below 0. " + wrestlerOne.name + " wins!")
+            return 1;
         }
 
         currentMove = selectMove(wrestlerTwo);
-        if(wrestlerTwo.moves[currentMove].type === "finisher" && randomIntGenerator(0,2) == 0) {
+        if(wrestlerTwo.moves[currentMove].type === "finisher" && randomIntGenerator(0,2) == 0 && wrestlerOneMatchHealth > 45) {
             console.log(wrestlerTwo.name + " attempted to use " + wrestlerTwo.moves[currentMove].name + ", but it failed!");
         }
+        else {
+            console.log(wrestlerTwo.name + " performs " + wrestlerTwo.moves[currentMove].name + " on " + wrestlerOne.name);
+            wrestlerOneMatchHealth -= wrestlerTwo.moves[currentMove].damage;
+        }
+
+        console.log(wrestlerOne.name + "'s health: " + wrestlerOneMatchHealth);
+        console.log(wrestlerTwo.name + "'s health: " + wrestlerTwoMatchHealth);
+
+        if(wrestlerOneMatchHealth <= 0) {
+            bothFightersStillUp = false;
+            console.log(wrestlerOne.name + " health is below 0. " + wrestlerTwo.name + " wins!");
+            return 2;
+        }
     }
+
 }
 
 function selectMove(wrestler) {

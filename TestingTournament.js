@@ -40,5 +40,12 @@ let wrestlerD = {
 
 function run_tests() {
     let wrestlerList = [wrestlerA, wrestlerB, wrestlerC, wrestlerD]
+    console.log("Tournament One Test!")
+    tournament(wrestlerList)
+    wrestlerList = [wrestlerA, wrestlerB, wrestlerC] //Testing bye system
+    console.log("Tournament Two Test!")
+    tournament(wrestlerList)
+    wrestlerList = [wrestlerA, wrestlerB] //Testing early exit system (we didn't have a 4 person tournament roster)
+    console.log("Tournament Three Test!")
     tournament(wrestlerList)
 }

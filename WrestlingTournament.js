@@ -15,6 +15,15 @@
  */
 //let tournamentQualifier = []; //Will house at most 4 wrestlers
 let tournamentFinals = [] //Will hold at most 2 wrestlers
+let nullFighter = {
+    name: 'No Show',
+    health: 0,
+    moves: [
+        {name: 'Tickle', damage: 0, type: 'signature'},
+        {name: 'Head Pat', damage: 0, type: 'signature'},
+        {name: 'Cuddle', damage: 0, type: 'finisher'}
+    ]
+}
 
 /*
  * A helper function for generating random numbers. 
@@ -30,9 +39,10 @@ function randomIntGenerator(min, max) { //This is NOT inclusive. Max should be +
  * This means that at most we can have 3 matches. 
  */
 function tournament(wrestlerList) {
+    tournamentFinals = [] //Reset in case we run multiple tournaments in a row.
     let numWrestlers = wrestlerList.length;
     while(numWrestlers < 4) { //This works to fill up the wrestlerList to 4 slots (with the nulls acting as empties.)
-        wrestlerList.push(null);
+        wrestlerList.push(nullFighter);
         numWrestlers = wrestlerList.length;
     }
 
@@ -45,7 +55,7 @@ function tournament(wrestlerList) {
         tournamentFinals.push(wrestlerList[1]);
     }
 
-    if(wrestlerList[2] === null && wrestlerList[3] === null) {
+    if(wrestlerList[2].name === "No Show" && wrestlerList[3].name === "No Show") {
         //This runs if we only had 2 contestants. Basically, we then don't need another round.
         console.log(tournamentFinals[0].name + " wins the tournament!");
     }
@@ -86,12 +96,12 @@ function match(wrestlerOne, wrestlerTwo) {
     let currentMove = -1; //Initialized to -1 so we don't accidentally have a default move.
 
     //Is one of our wrestler slots empty? If yes, then they automatically win
-    if(wrestlerOne === null) {
+    if(wrestlerOne.name === "No Show") {
         console.log(wrestlerTwo.name + " gets a bye, and automatically advances to the next round!");
         //tournamentFinals.push(wrestlerTwo);
         return 2;
     }
-    else if(wrestlerTwo === null) {
+    else if(wrestlerTwo.name === "No Show") {
         console.log(wrestlerOne.name + " gets a bye, and automatically advances to the next round!");
         //tournamentFinals.push(wrestlerOne);
         return 1;

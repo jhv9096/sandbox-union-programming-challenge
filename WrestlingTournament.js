@@ -119,6 +119,9 @@ function match(wrestlerOne, wrestlerTwo) {
         else {
             console.log(wrestlerOne.name + " performs " + wrestlerOne.moves[currentMove].name + " on " + wrestlerTwo.name);
             wrestlerTwoMatchHealth -= wrestlerOne.moves[currentMove].damage;
+            if(wrestlerTwoMatchHealth < 0) {
+                wrestlerTwoMatchHealth = 0;
+            }
         }
 
         console.log(wrestlerOne.name + "'s health: " + wrestlerOneMatchHealth);
@@ -137,6 +140,9 @@ function match(wrestlerOne, wrestlerTwo) {
         else {
             console.log(wrestlerTwo.name + " performs " + wrestlerTwo.moves[currentMove].name + " on " + wrestlerOne.name);
             wrestlerOneMatchHealth -= wrestlerTwo.moves[currentMove].damage;
+            if(wrestlerOneMatchHealth < 0) {
+                wrestlerOneMatchHealth = 0;
+            }
         }
 
         console.log(wrestlerOne.name + "'s health: " + wrestlerOneMatchHealth);

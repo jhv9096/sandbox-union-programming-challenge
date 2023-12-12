@@ -37,7 +37,7 @@ function tournament(wrestlerList) {
     }
 
     console.log("Match 1: " + wrestlerList[0].name + " vs. " + wrestlerList[1].name);
-    let matchWinner = match(wrestlerList[0], wrestlerList[1]);
+    let matchwinner = match(wrestlerList[0], wrestlerList[1]);
     if(matchwinner === 1) {
         tournamentFinals.push(wrestlerList[0]);
     }
@@ -51,8 +51,8 @@ function tournament(wrestlerList) {
     }
     else {
         console.log("Match 2: " + wrestlerList[2].name + " vs. " + wrestlerList[3].name)
-        matchWinner = match(wrestlerList[2], wrestlerList[3]);
-        if(matchWinner === 1) {
+        matchwinner = match(wrestlerList[2], wrestlerList[3]);
+        if(matchwinner === 1) {
             tournamentFinals.push(wrestlerList[2]);
         }
         else {
@@ -60,7 +60,7 @@ function tournament(wrestlerList) {
         }
 
         console.log("Match 3: " + tournamentFinals[0].name + " vs. " + tournamentFinals[1].name);
-        matchWinner = match(tournamentFinals[0], tournamentFinals[1])
+        matchwinner = match(tournamentFinals[0], tournamentFinals[1])
         if (matchwinner === 1) {
             console.log(tournamentFinals[0].name + " wins the tournament!");
         }
@@ -137,6 +137,7 @@ function match(wrestlerOne, wrestlerTwo) {
             console.log(wrestlerOne.name + " health is below 0. " + wrestlerTwo.name + " wins!");
             return 2;
         }
+        roundCounter+=1;
     }
 
 }

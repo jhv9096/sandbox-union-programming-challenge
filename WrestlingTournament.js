@@ -60,6 +60,13 @@ function tournament(wrestlerList) {
         }
 
         console.log("Match 3: " + tournamentFinals[0].name + " vs. " + tournamentFinals[1].name);
+        matchWinner = match(tournamentFinals[0], tournamentFinals[1])
+        if (matchwinner === 1) {
+            console.log(tournamentFinals[0].name + " wins the tournament!");
+        }
+        else{
+            console.log(tournamentFinals[1].name + " wins the tournament!");
+        }
     }
 }
 
